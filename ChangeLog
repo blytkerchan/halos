@@ -1,3 +1,7 @@
+2004-09-22	blytkerchan
+	* Makefile.in.in: add -c to $(AS)'s command-line options when
+	assembling .S to .o files
+
 2004-09-21	blytkerchan
 	* Makefile.in.in: add a vpath for .S files
 	remove references to C++ compiler

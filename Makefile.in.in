@@ -93,7 +93,7 @@ real_all : $(patsubst %,%.a,$(LIBRARIES)) $(patsubst %,%.exe,$(PROGRAMS)) $$__KE
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
 
 %.o : %.S $(MAKEFILE)
-	$(AS) $(CPPFLAGS) -o $@ $<
+	$(AS) $(CPPFLAGS) -c -o $@ $<
 
 # dependencies for configury-related files
 Makefile : $(srcdir)/Makefile.in
