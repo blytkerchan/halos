@@ -1,0 +1,127 @@
+LIBRARIES=$$__LIBRARIES__$$
+PROGRAMS=$$__PROGRAMS__$$
+MODULES=$$__PROGRAMS__$$ $$__LIBRARIES__$$
+
+all : real_all
+
+# List of all makefiles - we re-make on a makefile change
+MAKEFILES = Makefile $(patsubst %,$(srcdir)/%/module.mk,$(MODULES))
+## filled in by configury
+# directories
+srcdir=@srcdir@
+vpath %.c .:$(srcdir)
+vpath %.cc .:$(srcdir)
+vpath %.h .:$(srcdir)
+vpath %.y .:$(srcdir)
+# the shell
+SHELL=@SHELL@
+# target architecture
+ARCH=@ARCH@
+# C ompiler
+
+# C++ compiler
+CXX=@CXX@
+# libtool
+top_builddir=.
+LIBTOOL=@LIBTOOL@
+# conditionals
+DO_CXX=@DO_CXX@
+DO_GLIB=@DO_GLIB@
+HAVE_PTHREAD_SIGMASK=@HAVE_PTHREAD_SIGMASK@
+# flags
+CFLAGS=@CFLAGS@
+CXXFLAGS=@CXXFLAGS@
+CPPFLAGS=@CPPFLAGS@
+LDFLAGS=@LDFLAGS@
+
+# look for include files in each of the modules:
+CFLAGS += -Wall -Werror -I. -I$(srcdir)
+CXXFLAGS += -Wall -Werror -I. -I$(srcdir)
+
+# add libreplace to include path if we have it
+ifeq ($$__LIBREPLACE__$$,libreplace)
+CFLAGS += -I$(srcdir)/libreplace
+CXXFLAGS += -I$(srcdir)/libreplace
+endif
+
+# extra libs if required
+LIBS := @LIBS@
+
+# each module will add to this
+SRC :=
+CXX_SRC :=
+GLIB_SRC :=
+
+# include the description of each module
+include $(patsubst %,$(srcdir)/%/module.mk,$(MODULES))
+
+# conditional code
+ifeq ($(DO_CXX),true)
+	SRC += $(CXX_SRC)
+endif
+ifeq ($(DO_GLIB),true)
+	SRC += $(GLIB_SRC)
+endif
+
+# determine the object files
+define OBJ_template
+$(1)_OBJ :=	$$(patsubst %.c,$(1)/%.lo,$$(filter %.c,$$($(1)_SRC))) \
+		$$(patsubst %.y,$(1)/%.lo,$$(filter %.y,$$($(1)_SRC))) \
+		$$(patsubst %.cc,$(1)/%.lo,$$(filter %.cc,$$($(1)_SRC))) \
+		$$(patsubst %.l,$(1)/%.lo,$$(filter %.l,$$($(1)_SRC)))
+OBJ += $$($(1)_OBJ)
+endef
+$(foreach mod,$(MODULES),$(eval $(call OBJ_template,$(mod))))
+
+# library linking rules
+include $(srcdir)/link.mk
+
+# include dependencies
+include $(OBJ:.lo=.d)
+
+define LTLIBRARIES_function
+ifeq ($(1),arch)
+	LTLIBRARIES += libarch
+else
+	LTLIBRARIES += $(1)
+endif
+endef
+$(foreach lib,$(LIBRARIES),$(eval $(call LTLIBRARIES_function,$(lib))))
+
+# dependencies for library targets
+libarch_OBJ:=$(arch_OBJ)
+
+real_all : $(patsubst %,%.la,$(LTLIBRARIES))
+
+# calculate C include dependencies
+%.d : %.c $(MAKEFILES)
+	mkdir -p `dirname $@`
+	$(SHELL) $(srcdir)/depend.sh -c `dirname $<` $(CFLAGS) $(CPPFLAGS) $< > $@
+
+%.d : %.cc $(MAKEFILES)
+	mkdir -p `dirname $@`
+	$(SHELL) $(srcdir)/depend.sh -c++ `dirname $<` $(CXXFLAGS) $(CPPFLAGS) $< > $@
+
+# compile rules
+%.lo : %.c $(MAKEFILES)
+	$(LIBTOOL) --mode=compile $(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
+
+%.lo : %.cc $(MAKEFILES)
+	$(LIBTOOL) --mode=compile $(CXX) $(CXXFLAGS) $(CPPFLAGS) -c -o $@ $<
+
+# dependencies for configury-related files
+Makefile : $(srcdir)/Makefile.in
+	$(SHELL) config.status
+
+$(srcdir)/Makefile.in : $(srcdir)/Makefile.in.in
+	cd $(srcdir) && bash bootstrap
+
+$(srcdir)/configure.ac : $(srcdir)/configure.ac.in
+	cd $(srcdir) && bash bootstrap
+
+config.status : $(srcdir)/configure
+	$(SHELL) $(srcdir)/configure
+
+$(srcdir)/configure : $(srcdir)/configure.ac
+	cd $(srcdir) && bash bootstrap
+

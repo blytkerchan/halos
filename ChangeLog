@@ -1,3 +1,8 @@
+2004-09-16	blytkerchan
+	* bootstrap: new file
+	* configure.ac.in: ditto
+	* Makefile.in.in: ditto
+
 2004-09-06	blytkerchan
 	* i386/: new directory
 
