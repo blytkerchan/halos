@@ -1,3 +1,11 @@
+2005-03-23	blytkerchan
+	* Makefile.in.in [Makefile]: add link.mk as a prerequisit
+	[Makefile.in]: run bootstrap.sh, not bootstrap
+	[configure.ac]: ditto
+	[configure]: ditto
+	[link.mk]: new target
+	* bootstrap.sh: add drivers and elf to modules
+
 2005-03-22	blytkerchan
 	* Makefile.in.in [install_kernel]: don't require kernel.img
 	[grub.img]: new target

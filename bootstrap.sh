@@ -77,8 +77,14 @@ function gen_makefile_in()
 	if [ -d sched ]; then
 		MODULES="sched $MODULES"
 	fi
+	if [ -d drivers ]; then
+		MODULES="drivers $MODULES"
+	fi
 	
 	# libraries go here
+	if [ -d elf ]; then
+		MODULES="elf $MODULES"
+	fi
 
 	# the kernel goes here
 	if [ -d kernel ]; then

@@ -96,20 +96,23 @@ real_all : $(patsubst %,%.a,$(LIBRARIES)) $(patsubst %,%.exe,$(PROGRAMS)) $$__KE
 	$(AS) $(CPPFLAGS) -c -o $@ $<
 
 # dependencies for configury-related files
-Makefile : $(srcdir)/Makefile.in
+Makefile : $(srcdir)/Makefile.in $(srcdir)/link.mk
 	$(SHELL) config.status
 
 $(srcdir)/Makefile.in : $(srcdir)/Makefile.in.in
-	cd $(srcdir) && bash bootstrap
+	cd $(srcdir) && bash bootstrap.sh
 
 $(srcdir)/configure.ac : $(srcdir)/configure.ac.in
-	cd $(srcdir) && bash bootstrap
+	cd $(srcdir) && bash bootstrap.sh
 
 config.status : $(srcdir)/configure
 	$(SHELL) $(srcdir)/configure
 
 $(srcdir)/configure : $(srcdir)/configure.ac
-	cd $(srcdir) && bash bootstrap
+	cd $(srcdir) && bash bootstrap.sh
+
+$(srcdir)/link.mk : $(srcdir)/bootstrap.sh
+	cd $(srcdir) && bash bootstrap.sh
 
 install_kernel : $$__KERNEL__$$ grub.img bochsrc
 	mkdir -p img
