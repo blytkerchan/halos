@@ -1,3 +1,7 @@
+2005-03-13	blytkerchan
+	* configure.ac.in: use debug info
+	* depend.sh: include "system" headers in dependencies
+
 2005-03-10	blytkerchan
 	* configure.ac.in: use freestanding gcc compiler
 
