@@ -111,3 +111,12 @@ config.status : $(srcdir)/configure
 $(srcdir)/configure : $(srcdir)/configure.ac
 	cd $(srcdir) && bash bootstrap
 
+install_kernel : $$__KERNEL__$$ kernel.img
+	mkdir -p img
+	sudo mount -o loop kernel.img img
+	sudo cp halos img
+	sudo umount kernel.img
+
+kernel.img : 
+	dd if=/dev/zero of=$@ bs=512 count=2880
+	sudo mke2fs -F -m 0 $@
