@@ -1,7 +1,6 @@
 # Process this file with autoconf to produce a configure script.
 AC_PREREQ(2.53)
 AC_INIT([$$__PACKAGE__$$],[$$__VERSION__$$],[jail-ust-devel@lists.sf.net])
-#AM_INIT_AUTOMAKE([$$__PACKAGE__$$], [$$__VERSION__$$])
 AC_CONFIG_SRCDIR([configure.ac])
 
 # check the host system
@@ -15,7 +14,6 @@ AC_PROG_CXX
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
-AC_PROG_LIBTOOL
 
 # Checks for libraries.
 

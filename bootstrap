@@ -64,7 +64,8 @@ function gen_link_mk()
 {
 	rm -f link.mk
 	cat >link.mk <<EOF
-cpu-info : \$(OBJS)
+cpu-info : \$(OBJ)
+	\$(CC) \$(LDFLAGS) -o \$@ \$^
 EOF
 }
 
@@ -73,8 +74,6 @@ gen_configure_ac
 gen_makefile_in
 gen_link_mk
 
-libtoolize && \
 aclocal && \
-autoheader && \
 autoconf && \
 cp $(locate install-sh | head -n1) .

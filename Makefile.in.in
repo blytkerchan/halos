@@ -23,7 +23,6 @@ ARCH=@ARCH@
 CXX=@CXX@
 # libtool
 top_builddir=.
-LIBTOOL=@LIBTOOL@
 # conditionals
 DO_CXX=@DO_CXX@
 DO_GLIB=@DO_GLIB@
@@ -65,10 +64,10 @@ endif
 
 # determine the object files
 define OBJ_template
-$(1)_OBJ :=	$$(patsubst %.c,$(1)/%.lo,$$(filter %.c,$$($(1)_SRC))) \
-		$$(patsubst %.y,$(1)/%.lo,$$(filter %.y,$$($(1)_SRC))) \
-		$$(patsubst %.cc,$(1)/%.lo,$$(filter %.cc,$$($(1)_SRC))) \
-		$$(patsubst %.l,$(1)/%.lo,$$(filter %.l,$$($(1)_SRC)))
+$(1)_OBJ :=	$$(patsubst %.c,$(1)/%.o,$$(filter %.c,$$($(1)_SRC))) \
+		$$(patsubst %.y,$(1)/%.o,$$(filter %.y,$$($(1)_SRC))) \
+		$$(patsubst %.cc,$(1)/%.o,$$(filter %.cc,$$($(1)_SRC))) \
+		$$(patsubst %.l,$(1)/%.o,$$(filter %.l,$$($(1)_SRC)))
 OBJ += $$($(1)_OBJ)
 endef
 $(foreach mod,$(MODULES),$(eval $(call OBJ_template,$(mod))))
@@ -77,7 +76,7 @@ $(foreach mod,$(MODULES),$(eval $(call OBJ_template,$(mod))))
 include $(srcdir)/link.mk
 
 # include dependencies
-include $(OBJ:.lo=.d)
+include $(OBJ:.o=.d)
 
 define LTLIBRARIES_function
 ifeq ($(1),arch)
@@ -103,11 +102,11 @@ real_all : $(patsubst %,%.la,$(LTLIBRARIES))
 	$(SHELL) $(srcdir)/depend.sh -c++ `dirname $<` $(CXXFLAGS) $(CPPFLAGS) $< > $@
 
 # compile rules
-%.lo : %.c $(MAKEFILES)
-	$(LIBTOOL) --mode=compile $(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
+%.o : %.c $(MAKEFILES)
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
 
-%.lo : %.cc $(MAKEFILES)
-	$(LIBTOOL) --mode=compile $(CXX) $(CXXFLAGS) $(CPPFLAGS) -c -o $@ $<
+%.o : %.cc $(MAKEFILES)
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c -o $@ $<
 
 # dependencies for configury-related files
 Makefile : $(srcdir)/Makefile.in

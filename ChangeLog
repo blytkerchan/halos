@@ -1,4 +1,10 @@
-2004-09-16	blytkerchan
+2004-09-16	blytkerchan	towards a working build
+	* Makefile.in.in: remove all references to libtool
+	* bootstrap (gen_link_mk): use $(OBJ) in stead of $(OBJS)
+	remove all references to libtool and autoheader
+	* configure.ac.in: remove all references to automake and libtool
+	* depend.sh: new file
+
 	* bootstrap: new file
 	* configure.ac.in: ditto
 	* Makefile.in.in: ditto
