@@ -1,4 +1,6 @@
 2004-09-17	blytkerchan
+	* bootstrap.sh: rename from bootstrap
+
 	* config.sub: new file
 	* config.guess: ditto
 	* install-sh: ditto
