@@ -69,7 +69,7 @@ function gen_link_mk()
 {
 	rm -f link.mk
 	cat >link.mk <<EOF
-cpu-info : \$(OBJ)
+cpu-info.exe : \$(OBJ)
 	\$(CC) \$(LDFLAGS) -o \$@ \$^
 EOF
 }

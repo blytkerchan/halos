@@ -90,7 +90,7 @@ $(foreach lib,$(LIBRARIES),$(eval $(call LTLIBRARIES_function,$(lib))))
 # dependencies for library targets
 libarch_OBJ:=$(arch_OBJ)
 
-real_all : $(patsubst %,%.a,$(LIBRARIES)) $(PROGRAMS)
+real_all : $(patsubst %,%.a,$(LIBRARIES)) $(patsubst %,%.exe,$(PROGRAMS))
 
 # calculate C include dependencies
 %.d : %.c $(MAKEFILES)

@@ -1,3 +1,8 @@
+2004-09-18	blytkerchan
+	* Makefile.in.in [real_all]: make all programs have a .exe extention
+	when building - to avoid conflicts with directory names
+	* bootstrap.sh (gen_link_mk): reflect above
+
 2004-09-17	blytkerchan
 	* bootstrap.sh: rename from bootstrap
 
