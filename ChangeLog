@@ -1,3 +1,6 @@
+2004-09-20	blytkerchan
+	* configure.ac.in: trim down to bare minimum
+
 2004-09-18	blytkerchan
 	* Makefile.in.in [real_all]: make all programs have a .exe extention
 	when building - to avoid conflicts with directory names
