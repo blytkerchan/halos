@@ -1,3 +1,9 @@
+2005-03-22	blytkerchan
+	* Makefile.in.in [install_kernel]: don't require kernel.img
+	[grub.img]: new target
+	[bochsrc]: ditto
+	[kernel.img]: remove target
+
 2005-03-21	blytkerchan
 	* bootstrap.sh: add sched to modules
 
