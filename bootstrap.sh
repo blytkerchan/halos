@@ -42,11 +42,35 @@ function gen_makefile_in()
 	PROGAMS=
 	LIBRARIES=
 	MODULES=
+	KERNEL=
+
+	# programs go here
 	if [ -d cpu-info ]; then
 		PROGRAMS="cpu-info $PROGRAMS"
 	fi
+
+	# modules go here
 	if [ -d cpu ]; then
 		MODULES="cpu $MODULES"
+	fi
+	if [ -d bootstrap ]; then
+		MODULES="bootstrap $MODULES"
+	fi
+	if [ -d event ]; then
+		MODULES="event $MODULES"
+	fi
+	if [ -d mm ]; then
+		MODULES="mm $MODULES"
+	fi
+	if [ -d klib ]; then
+		MODULES="klib $MODULES"
+	fi
+	
+	# libraries go here
+
+	# the kernel goes here
+	if [ -d kernel ]; then
+		KERNEL="halos"
 	fi
 
 	cat > bootstrap.pl <<EOF
@@ -58,7 +82,8 @@ while (<>)
 	\$_ =~ s/\\\$\\\$__LIBRARIES__\\\$\\\$/$LIBRARIES/g;
 	\$_ =~ s/\\\$\\\$__PROGRAMS__\\\$\\\$/$PROGRAMS/g;
 	\$_ =~ s/\\\$\\\$__MODULES__\\\$\\\$/$MODULES/g;
-
+	\$_ =~ s/\\\$\\\$__KERNEL__\\\$\\\$/$KERNEL/g;
+	
 	print \$_;
 }
 EOF
@@ -71,6 +96,10 @@ function gen_link_mk()
 	cat >link.mk <<EOF
 cpu-info.exe : \$(OBJ)
 	\$(CC) \$(LDFLAGS) -o \$@ \$^
+
+halos : \$(OBJ)
+	\$(LD) \$(LDFLAGS) -T\$(srcdir)/config/kernel.lds -o\$@ \$^
+
 EOF
 }
 

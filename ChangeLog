@@ -1,4 +1,9 @@
 2004-09-20	blytkerchan
+	* Makefile.in.in [real_all]: add kernel
+	* bootstrap.sh (gen_makefile_in): add $$__KERNEL__$$ bootstrap var
+	add diff modules for the kernel
+	(gen_link_mk): add halos target to link.mk
+
 	* configure.ac.in: trim down to bare minimum
 
 2004-09-18	blytkerchan
