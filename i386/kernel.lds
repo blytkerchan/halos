@@ -32,15 +32,58 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 OUTPUT_FORMAT("elf32-i386", "elf32-i386", "elf32-i386")
+ENTRY(_start)
 OUTPUT_ARCH("i386")
 
 SECTIONS
 {
 	. = 0x200000;
-	.multiboot : { *(.multiboot) }
-	.text : { *(.text) }
-	.rodata : { *(.rodata) }
-	.data : { *(.data) }
-	.bss : { *(.bss) }
+	__b_load = .;
+	.multiboot : 
+	{ 
+		*(.multiboot); 
+		LONG(0); /* force allocation of the section */
+	}
+	
+	. = ALIGN(4096);
+	__b_kernel = .;
+	
+	.text ALIGN(4096) :
+	{
+		*(.text)
+		PROVIDE(__etext = .);
+	}
+	.rodata : 
+	{ 
+		*(.rodata) 
+		PROVIDE(__erodata = .);
+	}
+	.data : 
+	{
+		*(.data) 
+		PROVIDE(__edata = .);
+		PROVIDE(__end_data = .);
+	}
+	__e_load = .;
+	.bss ALIGN(4096):
+	{
+		*(.bss)
+		*(COMMON)
+		. = ALIGN(4096);
+		*(.init_stack)
+
+		PROVIDE(__e_bss = .);
+	}
+
+	__e_kernel = .;
+	__kernel_end = .;
+
+/*	/DISCARD/ : {
+		*(.node*)
+		*(.indent)
+		*(.comment)
+		*(.stab)
+		*(.stabstr)
+	} */
 }
 

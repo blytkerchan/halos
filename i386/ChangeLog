@@ -1,3 +1,6 @@
+2005-03-02	blytkerchan
+	* kernel.lds: making it boot with Grub: added missing symbols
+
 2004-09-20	blytkerchan
 	* kernel.lds: add missing semicolon
 
