@@ -13,35 +13,24 @@ vpath %.c .:$(srcdir)
 vpath %.cc .:$(srcdir)
 vpath %.h .:$(srcdir)
 vpath %.y .:$(srcdir)
+vpath %.S .:$(srcdir)
+
 # the shell
 SHELL=@SHELL@
 # target architecture
 ARCH=@ARCH@
 # C ompiler
-
-# C++ compiler
-CXX=@CXX@
-# libtool
+CC=@CC@
+# assembler
+AS=@CC@
 top_builddir=.
-# conditionals
-DO_CXX=@DO_CXX@
-DO_GLIB=@DO_GLIB@
-HAVE_PTHREAD_SIGMASK=@HAVE_PTHREAD_SIGMASK@
 # flags
 CFLAGS=@CFLAGS@
-CXXFLAGS=@CXXFLAGS@
-CPPFLAGS=@CPPFLAGS@
+CPPFLAGS=@CPPFLAGS@ @DEFS@
 LDFLAGS=@LDFLAGS@
 
 # look for include files in each of the modules:
 CFLAGS += -Wall -Werror -I. -I$(srcdir)
-CXXFLAGS += -Wall -Werror -I. -I$(srcdir)
-
-# add libreplace to include path if we have it
-ifeq ($$__LIBREPLACE__$$,libreplace)
-CFLAGS += -I$(srcdir)/libreplace
-CXXFLAGS += -I$(srcdir)/libreplace
-endif
 
 # extra libs if required
 LIBS := @LIBS@
@@ -65,9 +54,7 @@ endif
 # determine the object files
 define OBJ_template
 $(1)_OBJ :=	$$(patsubst %.c,$(1)/%.o,$$(filter %.c,$$($(1)_SRC))) \
-		$$(patsubst %.y,$(1)/%.o,$$(filter %.y,$$($(1)_SRC))) \
-		$$(patsubst %.cc,$(1)/%.o,$$(filter %.cc,$$($(1)_SRC))) \
-		$$(patsubst %.l,$(1)/%.o,$$(filter %.l,$$($(1)_SRC)))
+		$$(patsubst %.S,$(1)/%.o,$$(filter %.S,$$($(1)_SRC)))
 OBJ += $$($(1)_OBJ)
 endef
 $(foreach mod,$(MODULES),$(eval $(call OBJ_template,$(mod))))
@@ -97,16 +84,16 @@ real_all : $(patsubst %,%.a,$(LIBRARIES)) $(patsubst %,%.exe,$(PROGRAMS)) $$__KE
 	mkdir -p `dirname $@`
 	$(SHELL) $(srcdir)/depend.sh -c `dirname $<` $(CFLAGS) $(CPPFLAGS) $< > $@
 
-%.d : %.cc $(MAKEFILES)
+%.d : %.S $(MAKEFILES)
 	mkdir -p `dirname $@`
-	$(SHELL) $(srcdir)/depend.sh -c++ `dirname $<` $(CXXFLAGS) $(CPPFLAGS) $< > $@
+	$(SHELL) $(srcdir)/depend.sh -S `dirname $<` $(CPPFLAGS) $< > $@
 
 # compile rules
 %.o : %.c $(MAKEFILES)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
 
-%.o : %.cc $(MAKEFILES)
-	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c -o $@ $<
+%.o : %.S $(MAKEFILE)
+	$(AS) $(CPPFLAGS) -o $@ $<
 
 # dependencies for configury-related files
 Makefile : $(srcdir)/Makefile.in

@@ -1,3 +1,14 @@
+2004-09-21	blytkerchan
+	* Makefile.in.in: add a vpath for .S files
+	remove references to C++ compiler
+	remove references to stuff from Jail we don't use (e.g. pthreads..)
+	add @DEFS config variable to CPPFLAGS
+	to generate *_OBJ, use *.c and *.S, no .l, .y or .cc files
+	generate .d files from .S files
+	ditto for .o files
+	set AS to @CC@
+	* bootstrap.sh: add kernel to modules
+
 2004-09-20	blytkerchan
 	* bootstrap.sh (gen_configure_ac): new bootstrap var BUILD_KERNEL
 	* configure.ac.in: ditto

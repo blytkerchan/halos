@@ -77,6 +77,7 @@ function gen_makefile_in()
 	# the kernel goes here
 	if [ -d kernel ]; then
 		KERNEL="halos"
+		MODULES="kernel $MODULES"
 	fi
 
 	cat > bootstrap.pl <<EOF
