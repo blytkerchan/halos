@@ -70,7 +70,7 @@ SECTIONS
 		*(.bss)
 		*(COMMON)
 		. = ALIGN(4096);
-		*(.init_stack)
+		*(.initial_stack)
 
 		PROVIDE(__e_bss = .);
 	}

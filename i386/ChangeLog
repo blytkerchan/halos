@@ -1,3 +1,6 @@
+2005-03-06	blytkerchan
+	* kernel.lds: slightly change the layout for the stack
+
 2005-03-02	blytkerchan
 	* kernel.lds: making it boot with Grub: added missing symbols
 
