@@ -11,6 +11,7 @@ AC_CANONICAL_HOST
 AC_SUBST(ARCH, ${host_cpu})
 
 # Checks for programs.
+export CC="gcc -ffreestanding"
 AC_PROG_CC
 AC_PROG_CPP
 AC_PROG_INSTALL

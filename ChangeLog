@@ -1,3 +1,6 @@
+2005-03-10	blytkerchan
+	* configure.ac.in: use freestanding gcc compiler
+
 2005-03-08	blytkerchan
 	* bootstrap.sh (gen_link_mk): generate map file and print the size of
 	the kernel
