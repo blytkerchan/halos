@@ -1,3 +1,7 @@
+2005-03-04	blytkerchan
+	* bootstrap.sh: add bochs module
+	* configure.ac.in: add support for --with-bochs option
+
 2004-09-22	blytkerchan
 	* Makefile.in.in: add -c to $(AS)'s command-line options when
 	assembling .S to .o files

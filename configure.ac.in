@@ -3,6 +3,9 @@ AC_PREREQ(2.53)
 AC_INIT([$$__PACKAGE__$$],[$$__VERSION__$$],[jail-ust-devel@lists.sf.net])
 AC_CONFIG_SRCDIR([configure.ac])
 
+# See if we should use Bochs
+AC_ARG_WITH(bochs, [Use port e9 hack for Bochs], AC_DEFINE(WITH_BOCHS,1,[Set if we have Bochs e9 port]))
+
 # check the host system
 AC_CANONICAL_HOST
 AC_SUBST(ARCH, ${host_cpu})

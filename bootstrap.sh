@@ -56,6 +56,9 @@ function gen_makefile_in()
 	fi
 
 	# modules go here
+	if [ -d bochs ]; then
+		MODULES="bochs $MODULES"
+	fi
 	if [ -d cpu ]; then
 		MODULES="cpu $MODULES"
 	fi
