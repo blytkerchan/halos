@@ -1,3 +1,6 @@
+2005-03-21	blytkerchan
+	* bootstrap.sh: add sched to modules
+
 2005-03-13	blytkerchan
 	* configure.ac.in: use debug info
 	* depend.sh: include "system" headers in dependencies

@@ -74,6 +74,9 @@ function gen_makefile_in()
 	if [ -d klib ]; then
 		MODULES="klib $MODULES"
 	fi
+	if [ -d sched ]; then
+		MODULES="sched $MODULES"
+	fi
 	
 	# libraries go here
 
