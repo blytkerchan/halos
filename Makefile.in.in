@@ -1,6 +1,6 @@
 LIBRARIES=$$__LIBRARIES__$$
 PROGRAMS=$$__PROGRAMS__$$
-MODULES=$$__PROGRAMS__$$ $$__LIBRARIES__$$
+MODULES=$$__PROGRAMS__$$ $$__LIBRARIES__$$ $$__MODULES__$$
 
 all : real_all
 
@@ -90,7 +90,7 @@ $(foreach lib,$(LIBRARIES),$(eval $(call LTLIBRARIES_function,$(lib))))
 # dependencies for library targets
 libarch_OBJ:=$(arch_OBJ)
 
-real_all : $(patsubst %,%.la,$(LTLIBRARIES))
+real_all : $(patsubst %,%.a,$(LIBRARIES)) $(PROGRAMS)
 
 # calculate C include dependencies
 %.d : %.c $(MAKEFILES)

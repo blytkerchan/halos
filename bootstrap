@@ -41,8 +41,12 @@ function gen_makefile_in()
 {
 	PROGAMS=
 	LIBRARIES=
+	MODULES=
 	if [ -d cpu-info ]; then
 		PROGRAMS="cpu-info $PROGRAMS"
+	fi
+	if [ -d cpu ]; then
+		MODULES="cpu $MODULES"
 	fi
 
 	cat > bootstrap.pl <<EOF
@@ -53,6 +57,7 @@ while (<>)
 	\$_ =~ s/\\\$\\\$__VERSION__\\\$\\\$/$VERSION/g;
 	\$_ =~ s/\\\$\\\$__LIBRARIES__\\\$\\\$/$LIBRARIES/g;
 	\$_ =~ s/\\\$\\\$__PROGRAMS__\\\$\\\$/$PROGRAMS/g;
+	\$_ =~ s/\\\$\\\$__MODULES__\\\$\\\$/$MODULES/g;
 
 	print \$_;
 }
@@ -75,5 +80,4 @@ gen_makefile_in
 gen_link_mk
 
 aclocal && \
-autoconf && \
-cp $(locate install-sh | head -n1) .
+autoconf
