@@ -109,6 +109,8 @@ cpu-info.exe : \$(OBJ)
 
 halos : \$(OBJ)
 	\$(LD) \$(LDFLAGS) -T\$(srcdir)/config/kernel.lds -o\$@ \$^
+	nm -C \$@ | cut -d ' ' -f 1,3 > halos.map
+	size \$@
 
 EOF
 }

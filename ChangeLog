@@ -1,3 +1,7 @@
+2005-03-08	blytkerchan
+	* bootstrap.sh (gen_link_mk): generate map file and print the size of
+	the kernel
+
 2005-03-06	blytkerchan
 	* Makefile.in.in [install_kernel]: new target
 	[kernel.img]: ditto
