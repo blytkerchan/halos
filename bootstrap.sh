@@ -25,12 +25,18 @@ function get_version_info()
 
 function gen_configure_ac()
 {
+	BUILD_KERNEL=0
+
+	if [ x"$PACKAGE" = xkernel ]; then
+		BUILD_KERNEL=1
+	fi
 	cat > bootstrap.pl <<EOF
 #! /usr/bin/perl -w
 while (<>)
 {
 	\$_ =~ s/\\\$\\\$__PACKAGE__\\\$\\\$/$PACKAGE/g;
 	\$_ =~ s/\\\$\\\$__VERSION__\\\$\\\$/$VERSION/g;
+	\$_ =~ s/\\\$\\\$__BUILD_KERNEL__\\\$\\\$/$BUILD_KERNEL/g;
 	print \$_;
 }
 EOF

@@ -24,6 +24,7 @@ AC_C_BIGENDIAN
 
 # Checks for library functions.
 
+AC_DEFINE(BUILD_KERNEL, $$__BUILD_KERNEL__$$)
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
 
