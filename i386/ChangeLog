@@ -1,3 +1,6 @@
+2004-09-20	blytkerchan
+	* kernel.lds: add missing semicolon
+
 2004-09-06	blytkerchan
 	* kernel.lds: new file
 

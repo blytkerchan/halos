@@ -36,7 +36,7 @@ OUTPUT_ARCH("i386")
 
 SECTIONS
 {
-	. = 0x200000
+	. = 0x200000;
 	.multiboot : { *(.multiboot) }
 	.text : { *(.text) }
 	.rodata : { *(.rodata) }
