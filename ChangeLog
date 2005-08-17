@@ -1,3 +1,8 @@
+2005-08-16	blytkerchan
+	* Makefile.in.in [real_all]: add install_kernel as prereq
+	* configure.ac.in [CC]: export as $CC -g -ffreestanding to allow
+	overriding std CC
+
 2005-03-23	blytkerchan
 	* Makefile.in.in [Makefile]: add link.mk as a prerequisit
 	[Makefile.in]: run bootstrap.sh, not bootstrap

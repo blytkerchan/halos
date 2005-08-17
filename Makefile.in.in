@@ -77,7 +77,7 @@ $(foreach lib,$(LIBRARIES),$(eval $(call LTLIBRARIES_function,$(lib))))
 # dependencies for library targets
 libarch_OBJ:=$(arch_OBJ)
 
-real_all : $(patsubst %,%.a,$(LIBRARIES)) $(patsubst %,%.exe,$(PROGRAMS)) $$__KERNEL__$$
+real_all : $(patsubst %,%.a,$(LIBRARIES)) $(patsubst %,%.exe,$(PROGRAMS)) $$__KERNEL__$$ install_kernel
 
 # calculate C include dependencies
 %.d : %.c $(MAKEFILES)
