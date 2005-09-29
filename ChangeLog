@@ -1,3 +1,6 @@
+2004-09-29	blytkerchan
+	* configure.ac.in [CC]: if $CC is not set, assume gcc
+
 2005-08-16	blytkerchan
 	* Makefile.in.in [real_all]: add install_kernel as prereq
 	* configure.ac.in [CC]: export as $CC -g -ffreestanding to allow
